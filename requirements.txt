@@ -8,7 +8,7 @@ itsdangerous==1.1.0
 pip==19.0.3
 setuptools==40.8.0
 gunicorn==20.0.4
-opencv_python==4.1.2.30
+opencv-python==4.1.2.30
 Keras==2.3.1
 numpy==1.18.2
 Pillow==8.2.0
