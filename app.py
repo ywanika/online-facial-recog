@@ -5,6 +5,7 @@ import numpy as np
 import cv2
 import os
 import random
+from passlib.hash import pbkdf2_sha256
 
 app = Flask(__name__)
 app.config["UPLOAD_FOLDER"] = "/static"
@@ -67,6 +68,22 @@ def index():
         recog_names, image_path = recog_face(image_data) #predict
         return render_template("show_image.html", names = recog_names, image = image_path)#display the names and final photo on a new html page
 
+@app.route("/admin", methods=["GET", "POST"])
+def admin():
+    if request.method == "GET": 
+        return render_template ("admin.html")
+    else:
+        password = request.form["password"]
+        if pbkdf2_sha256.verify(password, os.environ.get("password")):
+            files = os.listdir("static")
+            for fileName in files:
+                os.remove("static/"+fileName)
+            return "cool"
+        else:
+            return redirect ("/")
+        
+
+
 #this runs the app
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()
