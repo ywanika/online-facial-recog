@@ -11,8 +11,8 @@ app = Flask(__name__)
 app.config["UPLOAD_FOLDER"] = "/static"
 app.config["SECRET_KEY"] = "gguu"
 
-face_cascade = cv2.CascadeClassifier("haarcascade_frontalface_default.xml") #load face classifier
-model = load_model ("famousFace.h5") #load the model to identify the faces
+#face_cascade = cv2.CascadeClassifier("haarcascade_frontalface_default.xml") #load face classifier
+#model = load_model ("famousFace.h5") #load the model to identify the faces
 
 def random_name_generator():
     """
