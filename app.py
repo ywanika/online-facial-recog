@@ -11,8 +11,8 @@ app = Flask(__name__)
 app.config["UPLOAD_FOLDER"] = "/static"
 app.config["SECRET_KEY"] = "gguu"
 
-#face_cascade = cv2.CascadeClassifier("haarcascade_frontalface_default.xml") #load face classifier
-#model = load_model ("famousFace.h5") #load the model to identify the faces
+face_cascade = cv2.CascadeClassifier("static/haarcascade_frontalface_default.xml") #load face classifier
+model = load_model ("static/famousFace.h5") #load the model to identify the faces
 
 def random_name_generator():
     """
@@ -58,8 +58,8 @@ def recog_face(user_image):
 @app.route("/", methods=["GET", "POST"])
 def index():
     if request.method == "GET": #if the user has asked to see the index route...
-        return "hello"
-        #return render_template ("index.html") #...show it
+        #return "hello"
+        return render_template ("index.html") #...show it
     
     else: #if the user has clicked the submit button...
         the_file_data = request.files["file"] #get the file
@@ -78,7 +78,8 @@ def admin():
         if pbkdf2_sha256.verify(password, os.environ.get("password")):
             files = os.listdir("static")
             for fileName in files:
-                os.remove("static/"+fileName)
+                if "png" in fileNane:
+                    os.remove("static/"+fileName)
             return "cool"
         else:
             return redirect ("/")
