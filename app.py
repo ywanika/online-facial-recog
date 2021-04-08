@@ -58,7 +58,8 @@ def recog_face(user_image):
 @app.route("/", methods=["GET", "POST"])
 def index():
     if request.method == "GET": #if the user has asked to see the index route...
-        return render_template ("index.html") #...show it
+        return "hello"
+        #return render_template ("index.html") #...show it
     
     else: #if the user has clicked the submit button...
         the_file_data = request.files["file"] #get the file
