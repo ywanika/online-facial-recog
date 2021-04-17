@@ -57,8 +57,12 @@ def recog_face(user_image):
 
 @app.route("/", methods=["GET", "POST"])
 def index():
+    """
+        If the user goes to the "/" route, this funtion runs. 
+        When they open the page, they will see an option to submit an image. 
+        Once they have submited it, the face is identified and they are sent to a new page to view the image.
+    """
     if request.method == "GET": #if the user has asked to see the index route...
-        #return "hello"
         return render_template ("index.html") #...show it
     
     else: #if the user has clicked the submit button...
@@ -71,17 +75,21 @@ def index():
 
 @app.route("/admin", methods=["GET", "POST"])
 def admin():
+    """
+        The admin can go to this route to clear the images stored in the static folder.
+    """
     if request.method == "GET": 
         return render_template ("admin.html")
     else:
         password = request.form["password"]
-        if pbkdf2_sha256.verify(password, os.environ.get("password")):
-            files = os.listdir("static")
-            for fileName in files:
-                if "png" in fileNane:
-                    os.remove("static/"+fileName)
-            return "cool"
-        else:
+        if pbkdf2_sha256.verify(password, os.environ.get("password")): 
+            #the entered password is hashed and compared with the hashed passowrd which is stored in the heroku enviroment
+            files = os.listdir("static") #get list of files in static
+            for fileName in files: #iterate through names
+                if "png" in fileName:  #if the file name is an image
+                    os.remove("static/"+fileName) #then we remove it
+            return "cool" #led to blank page to confirm
+        else: #if the incorrect password is entered
             return redirect ("/")
         
 
